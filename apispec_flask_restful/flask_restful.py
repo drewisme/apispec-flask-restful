@@ -62,6 +62,12 @@ def path_helper(_spec, **kwargs):
     """Extracts swagger spec from `flask-restful` methods."""
     try:
         resource = kwargs.pop('resource')
+    except KeyError:
+        # Skip when resource isn't provided. This allows other extensions
+        # to process this path.
+        raise TypeError
+
+    try:
 
         path = deduce_path(resource, **kwargs)
 
